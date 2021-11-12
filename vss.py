@@ -1,8 +1,5 @@
 import numpy as np
-import sys
 import soundfile as sf
-import pyaudio
-import json
 
 # 5.1 angles = {L: -30, C: 0, R: 30, Ls: -120, Rs: 120}
 # which_speaker: (elevation, azimuth)
@@ -14,55 +11,6 @@ import json
 # 
 # wav file 0 degree elevation = impulse_file[::8]
 # wav file 180 degree elevation = impulse_file[::40]
-
-sound_file = 'Parking Garage'
-signal = './Audio/' + sound_file + '.wav'
-impulse_51 = {
-    'left_ear': {
-        'l_left': {
-            'hrir': './HRTF/UCD_wavdb/subject10/neg30azleft.wav',
-            'elevation': 8
-        },
-        'l_center': {
-            'hrir': './HRTF/UCD_wavdb/subject10/0azleft.wav',
-            'elevation': 8
-        },
-        'l_right': {
-            'hrir': './HRTF/UCD_wavdb/subject10/30azleft.wav',
-            'elevation': 8
-        },
-        'l_left_surround': {
-            'hrir': './HRTF/UCD_wavdb/subject10/neg65azleft.wav',
-            'elevation': 40
-        },
-        'l_right_surround': {
-            'hrir': './HRTF/UCD_wavdb/subject10/65azleft.wav',
-            'elevation': 40
-        }
-    },
-    'right_ear': {
-        'r_left': {
-            'hrir': './HRTF/UCD_wavdb/subject10/neg30azright.wav',
-            'elevation': 8
-        },
-        'r_center': {
-            'hrir': './HRTF/UCD_wavdb/subject10/0azright.wav',
-            'elevation': 8
-        },
-        'r_right': {
-            'hrir': './HRTF/UCD_wavdb/subject10/30azright.wav',
-            'elevation': 8
-        },
-        'r_left_surround': {
-            'hrir': './HRTF/UCD_wavdb/subject10/neg65azright.wav',
-            'elevation': 40
-        },
-        'r_right_surround': {
-            'hrir': './HRTF/UCD_wavdb/subject10/65azright.wav',
-            'elevation': 40
-        }
-    }
-}
 
 ################################# FUNCTIONS ####################################
 
@@ -105,15 +53,67 @@ def convert_to_binaural(x:np.array):
         for k in range(0, 5):
             binaural[i] += x[i,k,:]
 
-    return binaural / np.amax(binaural) # Normalize
+    return binaural * np.amax(signal_read) / np.amax(binaural) # Normalize to original volume
 
 ################################################################################
 
 
 # Process File
-signal_read, fs = sf.read(signal)
-signal_read = np.swapaxes(signal_read, 1, 0)
-hrirs = get_impulse()
-multichannel_convolution = multichannel_convolution(signal_read, hrirs)
-binaural_out = np.swapaxes(convert_to_binaural(multichannel_convolution), 0, 1)
-sf.write(f'{sound_file}_vss.wav', binaural_out, fs)
+if __name__ == "__main__":
+
+    sound_file = 'Parking Garage'
+    signal = './Audio/' + sound_file + '.wav'
+    impulse_51 = {
+        'left_ear': {
+            'l_left': {
+                'hrir': './HRTF/UCD_wavdb/subject10/neg30azleft.wav',
+                'elevation': 8
+            },
+            'l_center': {
+                'hrir': './HRTF/UCD_wavdb/subject10/0azleft.wav',
+                'elevation': 8
+            },
+            'l_right': {
+                'hrir': './HRTF/UCD_wavdb/subject10/30azleft.wav',
+                'elevation': 8
+            },
+            'l_left_surround': {
+                'hrir': './HRTF/UCD_wavdb/subject10/neg65azleft.wav',
+                'elevation': 40
+            },
+            'l_right_surround': {
+                'hrir': './HRTF/UCD_wavdb/subject10/65azleft.wav',
+                'elevation': 40
+            }
+        },
+        'right_ear': {
+            'r_left': {
+                'hrir': './HRTF/UCD_wavdb/subject10/neg30azright.wav',
+                'elevation': 8
+            },
+            'r_center': {
+                'hrir': './HRTF/UCD_wavdb/subject10/0azright.wav',
+                'elevation': 8
+            },
+            'r_right': {
+                'hrir': './HRTF/UCD_wavdb/subject10/30azright.wav',
+                'elevation': 8
+            },
+            'r_left_surround': {
+                'hrir': './HRTF/UCD_wavdb/subject10/neg65azright.wav',
+                'elevation': 40
+            },
+            'r_right_surround': {
+                'hrir': './HRTF/UCD_wavdb/subject10/65azright.wav',
+                'elevation': 40
+            }
+        }
+    }
+
+
+    signal_read, sr = sf.read(signal)
+    signal_read = np.swapaxes(signal_read, 1, 0)
+    hrirs = get_impulse()
+    multichannel_convolution = multichannel_convolution(signal_read, hrirs)
+    binaural_out = np.swapaxes(convert_to_binaural(multichannel_convolution), 0, 1)
+    sf.write(f'{sound_file}_vss.wav', binaural_out, sr)
