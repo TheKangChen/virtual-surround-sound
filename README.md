@@ -32,4 +32,4 @@ Processing:
 
 #### Reference
 - HRTF data from CIPIC database by UC Davis: https://www.ece.ucdavis.edu/cipic/spatial-sound/hrtf-data/
-- Stereo downmix method reference Dolby website: https://professionalsupport.dolby.com/s/article/How-do-the-5-1-and-Stereo-downmix-settings-work?language=en_US
+- Stereo downmix method reference Dolby website (Lo/Ro - default): https://professionalsupport.dolby.com/s/article/How-do-the-5-1-and-Stereo-downmix-settings-work?language=en_US
