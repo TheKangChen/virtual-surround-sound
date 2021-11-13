@@ -1,5 +1,6 @@
 # VirtualSurroundSound
-Binaural virtual surround sound reproduction and surround sound stereo downmix
+Binaural virtual surround sound reproduction and surround sound stereo downmix.\
+
 ---
 #### Original Audio
 From Soundly 5.0 Surround Sound library: https://getsoundly.com/ \
