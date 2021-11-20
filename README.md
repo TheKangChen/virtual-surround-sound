@@ -1,5 +1,22 @@
 # VirtualSurroundSound
 Binaural virtual surround sound reproduction and surround sound stereo downmix.
+---
+#### Updated Nov, 20, 2021:
+Now able to take 7.1.4 Audio files as input for virtual surround.
+- 7.1.4 layout: L, R, C, LFE, LS, RS, RLS, RRS, FLU, FRU, RLU, RRU
+- HRIRs from database:
+    - L: Elevation 0 degree, Azimuth -65 degree
+    - R: Elevation 0 degree, Azimuth 65 degree
+    - C: Elevation 0 degree, Azimuth 0 degree
+    - LFE: N/A
+    - LS: Elevation 180 degree, Azimuth -20 degree
+    - RS: Elevation 180 degree, Azimuth 20 degree
+    - RLS: Elevation 180 degree, Azimuth -55 degree
+    - RRS: Elevation 180 degree, Azimuth 55 degree
+    - FLU: Elevation 45 degree, Azimuth -30 degree
+    - FRU: Elevation 45 degree, Azimuth 30 degree
+    - RLU: Elevation 135 degree, Azimuth -30 degree
+    - RRU: Elevation 135 degree, Azimuth 30 degree
 
 ---
 #### Original Audio
